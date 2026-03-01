@@ -1,5 +1,6 @@
 import { FileText, Code, Image, Film, CheckCircle2 } from 'lucide-react';
-import { useState } from 'react';
+import { DraggableSegmented } from './ui/DraggableSegmented';
+import { useLocalStorageState } from '../hooks/useLocalStorageState';
 
 interface Milestone {
   number: number;
@@ -210,8 +211,12 @@ const milestones: Milestone[] = [
 ];
 
 export function MilestoneDetails() {
-  const [selectedMilestone, setSelectedMilestone] = useState<number>(1);
+  const [selectedMilestone, setSelectedMilestone] = useLocalStorageState<number>('milestone.selected', 1);
   const milestone = milestones.find(m => m.number === selectedMilestone)!;
+  const milestoneOptions = milestones.map((m) => ({
+    id: m.number,
+    label: `Показ ${m.number}`
+  }));
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
@@ -222,13 +227,26 @@ export function MilestoneDetails() {
     }
   };
 
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'docs': return 'blue';
-      case 'code': return 'emerald';
-      case 'demo': return 'purple';
-      case 'files': return 'amber';
-      default: return 'slate';
+  const categoryStyles: Record<string, { container: string; title: string; list: string }> = {
+    docs: {
+      container: 'bg-blue-50 border-blue-200',
+      title: 'text-blue-900',
+      list: 'text-blue-800'
+    },
+    code: {
+      container: 'bg-emerald-50 border-emerald-200',
+      title: 'text-emerald-900',
+      list: 'text-emerald-800'
+    },
+    demo: {
+      container: 'bg-purple-50 border-purple-200',
+      title: 'text-purple-900',
+      list: 'text-purple-800'
+    },
+    files: {
+      container: 'bg-amber-50 border-amber-200',
+      title: 'text-amber-900',
+      list: 'text-amber-800'
     }
   };
 
@@ -244,35 +262,28 @@ export function MilestoneDetails() {
   return (
     <div className="space-y-6">
       {/* Milestone Selector */}
-      <div className="grid grid-cols-4 gap-4">
-        {milestones.map((m) => (
-          <button
-            key={m.number}
-            onClick={() => setSelectedMilestone(m.number)}
-            className={`p-6 rounded-lg border-2 transition-all text-left ${
-              selectedMilestone === m.number
-                ? 'bg-purple-600 text-white border-purple-600 shadow-lg'
-                : 'bg-white text-slate-900 border-slate-200 hover:border-purple-300'
-            }`}
-          >
-            <div className="font-bold mb-1">Показ {m.number}</div>
-            <div className={`text-sm ${selectedMilestone === m.number ? 'text-purple-100' : 'text-slate-600'}`}>
-              Неделя {m.week}
-            </div>
-          </button>
-        ))}
+      <div className="space-y-3">
+        <DraggableSegmented
+          value={selectedMilestone}
+          options={milestoneOptions}
+          onChange={setSelectedMilestone}
+          className="w-full"
+        />
+        <div className="text-sm text-slate-600">
+          Неделя {milestone.week}: {milestone.title}
+        </div>
       </div>
 
       {/* Milestone Details */}
       <div className="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
-        <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6">
+        <div className="bg-white border-b border-slate-200 p-6">
           <div className="flex items-start justify-between">
             <div>
-              <div className="text-sm font-semibold text-purple-100 mb-2">
-                ПОКАЗ {milestone.number} • Неделя {milestone.week}
+              <div className="text-sm font-semibold text-slate-500 mb-2">
+                Показ {milestone.number} • Неделя {milestone.week}
               </div>
-              <h2 className="font-bold text-2xl mb-2">{milestone.title}</h2>
-              <p className="text-purple-100">{milestone.description}</p>
+              <h2 className="font-bold text-2xl mb-2 text-slate-900">{milestone.title}</h2>
+              <p className="text-slate-600">{milestone.description}</p>
             </div>
           </div>
         </div>
@@ -290,17 +301,16 @@ export function MilestoneDetails() {
               {milestone.artifacts.map((artifact, idx) => (
                 <div
                   key={idx}
-                  className={`bg-${getCategoryColor(artifact.category)}-50 border border-${getCategoryColor(artifact.category)}-200 rounded-lg p-4`}
+                  className={`rounded-lg border p-4 ${categoryStyles[artifact.category].container}`}
                 >
-                  <div className={`flex items-center gap-2 mb-3 text-${getCategoryColor(artifact.category)}-900 font-semibold`}>
+                  <div className={`mb-3 flex items-center gap-2 font-semibold ${categoryStyles[artifact.category].title}`}>
                     {getCategoryIcon(artifact.category)}
                     {getCategoryLabel(artifact.category)}
                   </div>
-                  <ul className={`space-y-2 text-sm text-${getCategoryColor(artifact.category)}-800`}>
+                  <ul className={`space-y-2 text-sm ${categoryStyles[artifact.category].list}`}>
                     {artifact.items.map((item, itemIdx) => (
-                      <li key={itemIdx} className="flex items-start gap-2">
-                        <span className="text-lg">•</span>
-                        <span>{item}</span>
+                      <li key={itemIdx} className="rounded-md border border-white/50 bg-white/50 px-3 py-2 leading-relaxed break-words">
+                        {item}
                       </li>
                     ))}
                   </ul>
@@ -340,13 +350,13 @@ export function MilestoneDetails() {
       </div>
 
       {/* Timeline */}
-      <div className="bg-gradient-to-r from-slate-700 to-slate-900 text-white rounded-lg p-6">
-        <h3 className="font-bold mb-4">График показов</h3>
+      <div className="bg-white border border-slate-200 rounded-lg p-6">
+        <h3 className="font-bold mb-4 text-slate-900">График показов</h3>
         <div className="grid grid-cols-4 gap-4">
           {milestones.map((m) => (
-            <div key={m.number} className="bg-white/10 rounded-lg p-4 backdrop-blur">
-              <div className="text-2xl font-bold mb-1">Неделя {m.week}</div>
-              <div className="text-sm text-slate-300">{m.title}</div>
+            <div key={m.number} className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+              <div className="text-2xl font-bold mb-1 text-slate-900">Неделя {m.week}</div>
+              <div className="text-sm text-slate-600">{m.title}</div>
             </div>
           ))}
         </div>

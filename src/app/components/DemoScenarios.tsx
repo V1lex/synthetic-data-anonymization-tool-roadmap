@@ -1,5 +1,6 @@
 import { Play, ArrowRight } from 'lucide-react';
-import { useState } from 'react';
+import { DraggableSegmented } from './ui/DraggableSegmented';
+import { useLocalStorageState } from '../hooks/useLocalStorageState';
 
 interface DemoScenario {
   milestone: number;
@@ -229,43 +230,39 @@ const demoScenarios: DemoScenario[] = [
 ];
 
 export function DemoScenarios() {
-  const [selectedDemo, setSelectedDemo] = useState<number>(2);
+  const [selectedDemo, setSelectedDemo] = useLocalStorageState<number>('demo.selected', 2);
   const demo = demoScenarios.find(d => d.milestone === selectedDemo)!;
+  const demoOptions = demoScenarios.map((d) => ({
+    id: d.milestone,
+    label: `Показ ${d.milestone}`
+  }));
 
   return (
     <div className="space-y-6">
       {/* Demo Selector */}
-      <div className="grid grid-cols-4 gap-4">
-        {demoScenarios.map((d) => (
-          <button
-            key={d.milestone}
-            onClick={() => setSelectedDemo(d.milestone)}
-            className={`p-6 rounded-lg border-2 transition-all text-left ${
-              selectedDemo === d.milestone
-                ? 'bg-blue-600 text-white border-blue-600 shadow-lg'
-                : 'bg-white text-slate-900 border-slate-200 hover:border-blue-300'
-            }`}
-          >
-            <div className="font-bold mb-1">Показ {d.milestone}</div>
-            <div className={`text-sm ${selectedDemo === d.milestone ? 'text-blue-100' : 'text-slate-600'}`}>
-              Неделя {d.week}
-            </div>
-          </button>
-        ))}
+      <div className="space-y-3">
+        <DraggableSegmented
+          value={selectedDemo}
+          options={demoOptions}
+          onChange={setSelectedDemo}
+          className="w-full"
+        />
+        <div className="text-sm text-slate-600">
+          Неделя {demo.week}: {demo.title}
+        </div>
       </div>
 
       {/* Demo Details */}
       <div className="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
+        <div className="bg-white border-b border-slate-200 p-6">
           <div className="flex items-start justify-between">
             <div>
-              <div className="text-sm font-semibold text-blue-100 mb-2">
-                ДЕМО СЦЕНАРИЙ • Показ {demo.milestone} • Неделя {demo.week}
+              <div className="text-sm font-semibold text-slate-500 mb-2">
+                Демо сценарий • Показ {demo.milestone} • Неделя {demo.week}
               </div>
-              <h2 className="font-bold text-2xl mb-2">{demo.title}</h2>
-              <p className="text-blue-100">Длительность: {demo.duration}</p>
+              <h2 className="font-bold text-2xl mb-2 text-slate-900">{demo.title}</h2>
+              <p className="text-slate-600">Длительность: {demo.duration}</p>
             </div>
-            <Play className="w-12 h-12 text-white" />
           </div>
         </div>
 
@@ -313,14 +310,14 @@ export function DemoScenarios() {
       </div>
 
       {/* Timeline of all demos */}
-      <div className="bg-slate-800 text-white rounded-lg p-6">
-        <h3 className="font-bold mb-4 text-lg">График всех демо</h3>
+      <div className="bg-white border border-slate-200 rounded-lg p-6">
+        <h3 className="font-bold mb-4 text-lg text-slate-900">График всех демо</h3>
         <div className="grid grid-cols-4 gap-4">
           {demoScenarios.map((d) => (
-            <div key={d.milestone} className="bg-white/10 rounded-lg p-4 backdrop-blur">
-              <div className="text-2xl font-bold mb-2">Неделя {d.week}</div>
-              <div className="text-sm text-slate-300 mb-2">{d.title}</div>
-              <div className="text-xs text-slate-400">{d.duration}</div>
+            <div key={d.milestone} className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+              <div className="text-2xl font-bold mb-2 text-slate-900">Неделя {d.week}</div>
+              <div className="text-sm text-slate-600 mb-2">{d.title}</div>
+              <div className="text-xs text-slate-500">{d.duration}</div>
             </div>
           ))}
         </div>

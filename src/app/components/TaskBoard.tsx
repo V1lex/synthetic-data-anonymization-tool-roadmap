@@ -1,5 +1,6 @@
 import { Users, Briefcase, Palette, CheckSquare } from 'lucide-react';
-import { useState } from 'react';
+import { DraggableSegmented } from './ui/DraggableSegmented';
+import { useLocalStorageState } from '../hooks/useLocalStorageState';
 
 interface Task {
   id: string;
@@ -92,13 +93,26 @@ export function TaskBoard() {
     { id: 'qa', name: 'QA/Doc/ML', icon: <CheckSquare className="w-5 h-5" />, color: 'amber' }
   ];
 
-  const [selectedSprint, setSelectedSprint] = useState<number>(1);
-  const [selectedRole, setSelectedRole] = useState<string | null>(null);
+  const [selectedSprint, setSelectedSprint] = useLocalStorageState<number>('taskboard.selectedSprint', 1);
+  const [selectedRole, setSelectedRole] = useLocalStorageState<RoleId | 'all'>('taskboard.selectedRole', 'all');
+
+  const sprintOptions: Array<{ id: number; label: string }> = [1, 2, 3, 4, 5].map((sprint) => ({
+    id: sprint,
+    label: `Спринт ${sprint}`
+  }));
+
+  const roleOptions: Array<{ id: RoleId | 'all'; label: string }> = [
+    { id: 'all', label: 'Все' },
+    { id: 'lead', label: 'Lead/PM' },
+    { id: 'backend', label: 'Backend' },
+    { id: 'web', label: 'Web/UX' },
+    { id: 'qa', label: 'QA/Doc/ML' }
+  ];
 
   const filteredTasks = tasks.filter(
     (task) => 
       task.sprint === selectedSprint &&
-      (selectedRole === null || task.role === selectedRole)
+      (selectedRole === 'all' || task.role === selectedRole)
   );
 
   const getPriorityColor = (priority: Task['priority']) => {
@@ -106,25 +120,6 @@ export function TaskBoard() {
       case 'high': return 'bg-red-100 text-red-800 border-red-300';
       case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-300';
       case 'low': return 'bg-green-100 text-green-800 border-green-300';
-    }
-  };
-
-  const roleFilterClasses: Record<RoleId, { active: string; inactive: string }> = {
-    lead: {
-      active: 'bg-blue-600 text-white',
-      inactive: 'bg-blue-100 text-blue-800 hover:bg-blue-200'
-    },
-    backend: {
-      active: 'bg-emerald-600 text-white',
-      inactive: 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200'
-    },
-    web: {
-      active: 'bg-purple-600 text-white',
-      inactive: 'bg-purple-100 text-purple-800 hover:bg-purple-200'
-    },
-    qa: {
-      active: 'bg-amber-600 text-white',
-      inactive: 'bg-amber-100 text-amber-800 hover:bg-amber-200'
     }
   };
 
@@ -140,9 +135,9 @@ export function TaskBoard() {
       subtitle: 'text-emerald-700'
     },
     web: {
-      container: 'bg-purple-50 border-purple-200',
+      container: 'bg-purple-100 border-purple-300',
       title: 'text-purple-900',
-      subtitle: 'text-purple-700'
+      subtitle: 'text-purple-800'
     },
     qa: {
       container: 'bg-amber-50 border-amber-200',
@@ -152,70 +147,39 @@ export function TaskBoard() {
   };
 
   const roleTagClasses: Record<RoleId, string> = {
-    lead: 'bg-blue-100 text-blue-800',
-    backend: 'bg-emerald-100 text-emerald-800',
-    web: 'bg-purple-100 text-purple-800',
-    qa: 'bg-amber-100 text-amber-800'
+    lead: 'bg-blue-100 text-blue-800 border border-blue-300',
+    backend: 'bg-emerald-100 text-emerald-800 border border-emerald-300',
+    web: 'bg-purple-100 text-purple-800 border border-purple-300',
+    qa: 'bg-amber-100 text-amber-800 border border-amber-300'
   };
 
   return (
     <div className="space-y-6">
       {/* Controls */}
       <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Sprint Filter */}
+        <div className="space-y-5">
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-3">
               Фильтр по спринту
             </label>
-            <div className="flex gap-2">
-              {[1, 2, 3, 4, 5].map((sprint) => (
-                <button
-                  key={sprint}
-                  onClick={() => setSelectedSprint(sprint)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    selectedSprint === sprint
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                  }`}
-                >
-                  Спринт {sprint}
-                </button>
-              ))}
-            </div>
+            <DraggableSegmented
+              value={selectedSprint}
+              options={sprintOptions}
+              onChange={setSelectedSprint}
+              className="w-full"
+            />
           </div>
 
-          {/* Role Filter */}
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-3">
               Фильтр по роли
             </label>
-            <div className="flex gap-2 flex-wrap">
-              <button
-                onClick={() => setSelectedRole(null)}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                  selectedRole === null
-                    ? 'bg-slate-700 text-white'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                }`}
-              >
-                Все
-              </button>
-              {roles.map((role) => (
-                <button
-                  key={role.id}
-                  onClick={() => setSelectedRole(role.id)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 ${
-                    selectedRole === role.id
-                      ? roleFilterClasses[role.id as RoleId].active
-                      : roleFilterClasses[role.id as RoleId].inactive
-                  }`}
-                >
-                  {role.icon}
-                  {role.name}
-                </button>
-              ))}
-            </div>
+            <DraggableSegmented
+              value={selectedRole}
+              options={roleOptions}
+              onChange={setSelectedRole}
+              className="w-full"
+            />
           </div>
         </div>
       </div>
@@ -263,9 +227,9 @@ export function TaskBoard() {
                       {task.id}
                     </span>
                     <span className={`text-xs px-2 py-1 rounded-full border ${getPriorityColor(task.priority)}`}>
-                      {task.priority === 'high' && '🔴 Высокий'}
-                      {task.priority === 'medium' && '🟡 Средний'}
-                      {task.priority === 'low' && '🟢 Низкий'}
+                      {task.priority === 'high' && 'Высокий'}
+                      {task.priority === 'medium' && 'Средний'}
+                      {task.priority === 'low' && 'Низкий'}
                     </span>
                     <span className={`text-xs px-2 py-1 rounded-full ${roleTagClasses[task.role]}`}>
                       {roles.find(r => r.id === task.role)?.name}
@@ -274,7 +238,7 @@ export function TaskBoard() {
                   <h4 className="font-semibold text-slate-900 mb-2">{task.title}</h4>
                   {task.dependencies && task.dependencies.length > 0 && (
                     <div className="flex items-center gap-2 text-sm text-slate-600">
-                      <span className="text-amber-600">⚠️ Зависимости:</span>
+                      <span className="text-amber-600">Зависимости:</span>
                       <span className="font-mono">{task.dependencies.join(', ')}</span>
                     </div>
                   )}
