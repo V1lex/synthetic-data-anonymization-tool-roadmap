@@ -396,7 +396,7 @@ function renderWeekToJpeg(week: Week) {
   const roleSections: Array<{ title: string; tasks: string[]; bg: string; border: string; text: string }> = [
     { title: 'Team Lead/PM', tasks: week.roles.lead, bg: '#eff6ff', border: '#bfdbfe', text: '#1e3a8a' },
     { title: 'Core Backend', tasks: week.roles.backend, bg: '#ecfdf5', border: '#a7f3d0', text: '#065f46' },
-    { title: 'Web/UX', tasks: week.roles.web, bg: '#f5f3ff', border: '#ddd6fe', text: '#5b21b6' },
+    { title: 'API/Web', tasks: week.roles.web, bg: '#f5f3ff', border: '#ddd6fe', text: '#5b21b6' },
     { title: 'QA/Doc/ML', tasks: week.roles.qa, bg: '#fffbeb', border: '#fde68a', text: '#92400e' }
   ];
 
@@ -643,7 +643,7 @@ export function RoadmapView() {
                     </ul>
                   </div>
                   <div className="bg-purple-50 rounded-lg p-3">
-                    <div className="font-semibold text-purple-900 mb-2 text-sm">Web/UX</div>
+                    <div className="font-semibold text-purple-900 mb-2 text-sm">API/Web</div>
                     <ul className="space-y-1 text-sm text-purple-800">
                       {week.roles.web.map((task, idx) => (
                         <li key={idx}>• {task}</li>

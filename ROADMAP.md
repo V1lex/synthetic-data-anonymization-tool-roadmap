@@ -33,7 +33,7 @@
 **Задачи по ролям:**
 - 👔 **Team Lead/PM:** Организация встреч, создание доски задач, настройка Git
 - ⚙️ **Core Backend:** Исследование Faker, прототип генерации
-- 🎨 **Web/UX:** Исследование FastAPI templates, mockup UI
+- 🎨 **API/Web:** Исследование FastAPI templates, mockup UI
 - ✅ **QA/Doc/ML:** Создание тест-плана, настройка pytest
 
 ---
@@ -50,7 +50,7 @@
 **Задачи по ролям:**
 - 👔 **Team Lead/PM:** Финализация архитектуры, ревью дизайна
 - ⚙️ **Core Backend:** Дизайн core модулей, API contracts
-- 🎨 **Web/UX:** Wireframes в Figma/Excalidraw, UI flow
+- 🎨 **API/Web:** Wireframes в Figma/Excalidraw, UI flow
 - ✅ **QA/Doc/ML:** Тест-кейсы для методов
 
 ---
@@ -102,7 +102,7 @@
 **Задачи по ролям:**
 - 👔 **Team Lead/PM:** Ревью кода, PR management
 - ⚙️ **Core Backend:** DataGenerator, Templates, CSV writer
-- 🎨 **Web/UX:** Начало FastAPI skeleton
+- 🎨 **API/Web:** Начало FastAPI skeleton
 - ✅ **QA/Doc/ML:** Unit tests, test data validation
 
 ---
@@ -119,7 +119,7 @@
 **Задачи по ролям:**
 - 👔 **Team Lead/PM:** Code reviews
 - ⚙️ **Core Backend:** Anonymizer classes, Masking/Redaction
-- 🎨 **Web/UX:** FastAPI routes skeleton
+- 🎨 **API/Web:** FastAPI routes skeleton
 - ✅ **QA/Doc/ML:** Tests для анонимизации
 
 ---
@@ -173,7 +173,7 @@ Live demo: запуск сервера → открыть /generate → выбр
 **Задачи по ролям:**
 - 👔 **Team Lead/PM:** Feature planning
 - ⚙️ **Core Backend:** FK relationships, Seed handling
-- 🎨 **Web/UX:** Generate page UI, Preview component
+- 🎨 **API/Web:** Generate page UI, Preview component
 - ✅ **QA/Doc/ML:** Validation tests
 
 ---
@@ -191,7 +191,7 @@ Live demo: запуск сервера → открыть /generate → выбр
 **Задачи по ролям:**
 - 👔 **Team Lead/PM:** Architecture review
 - ⚙️ **Core Backend:** Pseudonymization, RuleSet engine
-- 🎨 **Web/UX:** Rules configuration UI
+- 🎨 **API/Web:** Rules configuration UI
 - ✅ **QA/Doc/ML:** Edge case tests
 
 ---
@@ -250,7 +250,7 @@ Live demo: запуск сервера → открыть /generate → выбр
 **Задачи по ролям:**
 - 👔 **Team Lead/PM:** UX review
 - ⚙️ **Core Backend:** CSV robustness, Preset I/O
-- 🎨 **Web/UX:** Error messages UI, Preset upload/download
+- 🎨 **API/Web:** Error messages UI, Preset upload/download
 - ✅ **QA/Doc/ML:** CSV format tests
 
 ---
@@ -267,7 +267,7 @@ Live demo: запуск сервера → открыть /generate → выбр
 **Задачи по ролям:**
 - 👔 **Team Lead/PM:** Feature prioritization
 - ⚙️ **Core Backend:** Logging, API docs
-- 🎨 **Web/UX:** Preview table, Progress indicators
+- 🎨 **API/Web:** Preview table, Progress indicators
 - ✅ **QA/Doc/ML:** User acceptance testing
 
 ---
@@ -336,7 +336,7 @@ Live demo: запуск сервера → открыть /generate → выбр
 **Задачи по ролям:**
 - 👔 **Team Lead/PM:** Bug triage, Deploy coordination
 - ⚙️ **Core Backend:** Refactoring, Performance
-- 🎨 **Web/UX:** UI fixes, Deploy setup
+- 🎨 **API/Web:** UI fixes, Deploy setup
 - ✅ **QA/Doc/ML:** Full test coverage, Load testing
 
 ---
@@ -353,7 +353,7 @@ Live demo: запуск сервера → открыть /generate → выбр
 **Задачи по ролям:**
 - 👔 **Team Lead/PM:** Presentation, Demo coordination
 - ⚙️ **Core Backend:** Documentation
-- 🎨 **Web/UX:** Demo preparation
+- 🎨 **API/Web:** Demo preparation
 - ✅ **QA/Doc/ML:** Final QA checklist
 
 **Сценарий финальной защиты (15-20 мин):**

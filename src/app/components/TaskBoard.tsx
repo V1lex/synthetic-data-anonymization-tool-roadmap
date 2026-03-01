@@ -17,7 +17,7 @@ type RoleId = Task['role'];
 const tasks: Task[] = [
   // Sprint 1 (Weeks 1-3)
   { id: 'T001', title: 'Настройка Git репозитория и структуры проекта', role: 'lead', sprint: 1, priority: 'high', estimated: '4ч' },
-  { id: 'T002', title: 'Создание доски задач (Trello/Notion/GitHub Projects)', role: 'lead', sprint: 1, priority: 'high', estimated: '2ч' },
+  { id: 'T002', title: 'Создание доски задач (Сфера.задачи)', role: 'lead', sprint: 1, priority: 'high', estimated: '2ч' },
   { id: 'T003', title: 'Архитектура: дизайн модулей core/io/interfaces', role: 'backend', sprint: 1, priority: 'high', estimated: '8ч' },
   { id: 'T004', title: 'Исследование Faker: примеры генерации данных', role: 'backend', sprint: 1, priority: 'high', estimated: '4ч' },
   { id: 'T005', title: 'Спецификация CSV-форматов (users, orders)', role: 'backend', sprint: 1, priority: 'high', estimated: '6ч' },
@@ -44,52 +44,55 @@ const tasks: Task[] = [
   { id: 'T024', title: 'Unit-тесты для DataGenerator', role: 'qa', sprint: 2, priority: 'high', dependencies: ['T012'], estimated: '6ч' },
   { id: 'T025', title: 'Unit-тесты для Anonymizer', role: 'qa', sprint: 2, priority: 'high', dependencies: ['T016'], estimated: '6ч' },
   { id: 'T026', title: 'E2E тест: generate → download', role: 'qa', sprint: 2, priority: 'high', dependencies: ['T021'], estimated: '4ч' },
+  { id: 'T027', title: 'Координация спринта 2: PR-ревью и подготовка Показа 2', role: 'lead', sprint: 2, priority: 'high', estimated: '6ч' },
 
   // Sprint 3 (Weeks 7-9)
-  { id: 'T027', title: 'Seed support для воспроизводимости', role: 'backend', sprint: 3, priority: 'high', dependencies: ['T012'], estimated: '4ч' },
-  { id: 'T028', title: 'Реализация pseudonymization (hashing с salt)', role: 'backend', sprint: 3, priority: 'high', dependencies: ['T016'], estimated: '12ч' },
-  { id: 'T029', title: 'Drop column метод', role: 'backend', sprint: 3, priority: 'medium', dependencies: ['T016'], estimated: '4ч' },
-  { id: 'T030', title: 'Модуль RuleSet: domain/rules.py', role: 'backend', sprint: 3, priority: 'high', estimated: '10ч' },
-  { id: 'T031', title: 'Pipeline: default keep + статус kept (no rule provided)', role: 'backend', sprint: 3, priority: 'high', dependencies: ['T030'], estimated: '8ч' },
-  { id: 'T032', title: 'Report.json (обязательный): методы по колонкам, changed_count, warnings/errors', role: 'backend', sprint: 3, priority: 'high', dependencies: ['T031'], estimated: '8ч' },
-  { id: 'T033', title: 'Веб-страница Generate: полная форма', role: 'web', sprint: 3, priority: 'high', dependencies: ['T021'], estimated: '10ч' },
-  { id: 'T034', title: 'Веб-страница Anonymize: column-wise rules', role: 'web', sprint: 3, priority: 'high', dependencies: ['T030'], estimated: '12ч' },
-  { id: 'T035', title: 'Preview компонент (первые N строк)', role: 'web', sprint: 3, priority: 'low', estimated: '6ч' },
-  { id: 'T036', title: 'Тесты для RuleSet engine', role: 'qa', sprint: 3, priority: 'high', dependencies: ['T030'], estimated: '8ч' },
-  { id: 'T037', title: 'Edge case тесты (несуществующие колонки)', role: 'qa', sprint: 3, priority: 'high', dependencies: ['T031'], estimated: '6ч' },
+  { id: 'T028', title: 'Seed support для воспроизводимости', role: 'backend', sprint: 3, priority: 'high', dependencies: ['T012'], estimated: '4ч' },
+  { id: 'T029', title: 'Реализация pseudonymization (hashing с salt)', role: 'backend', sprint: 3, priority: 'high', dependencies: ['T016'], estimated: '12ч' },
+  { id: 'T030', title: 'Drop column метод', role: 'backend', sprint: 3, priority: 'medium', dependencies: ['T016'], estimated: '4ч' },
+  { id: 'T031', title: 'Модуль RuleSet: domain/rules.py', role: 'backend', sprint: 3, priority: 'high', estimated: '10ч' },
+  { id: 'T032', title: 'Pipeline: default keep + статус kept (no rule provided)', role: 'backend', sprint: 3, priority: 'high', dependencies: ['T031'], estimated: '8ч' },
+  { id: 'T033', title: 'Report.json (обязательный): методы по колонкам, changed_count, warnings/errors', role: 'backend', sprint: 3, priority: 'high', dependencies: ['T032'], estimated: '8ч' },
+  { id: 'T034', title: 'Веб-страница Generate: полная форма', role: 'web', sprint: 3, priority: 'high', dependencies: ['T021'], estimated: '10ч' },
+  { id: 'T035', title: 'Веб-страница Anonymize: column-wise rules', role: 'web', sprint: 3, priority: 'high', dependencies: ['T031'], estimated: '12ч' },
+  { id: 'T036', title: 'Preview компонент (первые N строк)', role: 'web', sprint: 3, priority: 'low', estimated: '6ч' },
+  { id: 'T037', title: 'Тесты для RuleSet engine', role: 'qa', sprint: 3, priority: 'high', dependencies: ['T031'], estimated: '8ч' },
+  { id: 'T038', title: 'Edge case тесты (несуществующие колонки)', role: 'qa', sprint: 3, priority: 'high', dependencies: ['T032'], estimated: '6ч' },
+  { id: 'T039', title: 'Координация спринта 3: архитектурное ревью и подготовка Показа 3', role: 'lead', sprint: 3, priority: 'high', estimated: '6ч' },
 
   // Sprint 4 (Weeks 10-12)
-  { id: 'T038', title: 'CSV robustness: delimiter detection', role: 'backend', sprint: 4, priority: 'high', estimated: '8ч' },
-  { id: 'T039', title: 'UTF-8 BOM для Excel compatibility', role: 'backend', sprint: 4, priority: 'medium', estimated: '4ч' },
-  { id: 'T040', title: 'Preset I/O: presets-first UX (загрузка/сохранение preset.json)', role: 'backend', sprint: 4, priority: 'high', dependencies: ['T030'], estimated: '8ч' },
-  { id: 'T041', title: 'Человеческие error messages + пустой файл/отсутствующие колонки', role: 'backend', sprint: 4, priority: 'high', estimated: '8ч' },
-  { id: 'T059', title: 'Лимит размера CSV (10-20MB) + понятная ошибка при превышении', role: 'backend', sprint: 4, priority: 'high', estimated: '4ч' },
-  { id: 'T042', title: 'Logging: простая история запусков', role: 'backend', sprint: 4, priority: 'low', estimated: '4ч' },
-  { id: 'T043', title: 'UI: preset upload/download', role: 'web', sprint: 4, priority: 'medium', dependencies: ['T040'], estimated: '8ч' },
-  { id: 'T044', title: 'UI: улучшенные error messages', role: 'web', sprint: 4, priority: 'high', dependencies: ['T041'], estimated: '6ч' },
-  { id: 'T045', title: 'UI: progress indicators', role: 'web', sprint: 4, priority: 'low', estimated: '6ч' },
-  { id: 'T046', title: 'OpenAPI/Swagger documentation', role: 'web', sprint: 4, priority: 'medium', estimated: '4ч' },
-  { id: 'T047', title: 'CSV format validation tests', role: 'qa', sprint: 4, priority: 'high', dependencies: ['T038'], estimated: '8ч' },
-  { id: 'T048', title: 'User acceptance testing', role: 'qa', sprint: 4, priority: 'high', estimated: '10ч' },
+  { id: 'T040', title: 'CSV robustness: delimiter detection', role: 'backend', sprint: 4, priority: 'high', estimated: '8ч' },
+  { id: 'T041', title: 'UTF-8 BOM для Excel compatibility', role: 'backend', sprint: 4, priority: 'medium', estimated: '4ч' },
+  { id: 'T042', title: 'Preset I/O: presets-first UX (загрузка/сохранение preset.json)', role: 'backend', sprint: 4, priority: 'high', dependencies: ['T031'], estimated: '8ч' },
+  { id: 'T043', title: 'Человеческие error messages + пустой файл/отсутствующие колонки', role: 'backend', sprint: 4, priority: 'high', estimated: '8ч' },
+  { id: 'T044', title: 'Лимит размера CSV (10-20MB) + понятная ошибка при превышении', role: 'backend', sprint: 4, priority: 'high', estimated: '4ч' },
+  { id: 'T045', title: 'Logging: простая история запусков', role: 'backend', sprint: 4, priority: 'low', estimated: '4ч' },
+  { id: 'T046', title: 'UI: preset upload/download', role: 'web', sprint: 4, priority: 'medium', dependencies: ['T042'], estimated: '8ч' },
+  { id: 'T047', title: 'UI: улучшенные error messages', role: 'web', sprint: 4, priority: 'high', dependencies: ['T043'], estimated: '6ч' },
+  { id: 'T048', title: 'UI: progress indicators', role: 'web', sprint: 4, priority: 'low', estimated: '6ч' },
+  { id: 'T049', title: 'OpenAPI/Swagger documentation', role: 'web', sprint: 4, priority: 'medium', estimated: '4ч' },
+  { id: 'T050', title: 'CSV format validation tests', role: 'qa', sprint: 4, priority: 'high', dependencies: ['T040'], estimated: '8ч' },
+  { id: 'T051', title: 'User acceptance testing', role: 'qa', sprint: 4, priority: 'high', estimated: '10ч' },
+  { id: 'T052', title: 'Координация спринта 4: приоритизация фич и подготовка Показа 4', role: 'lead', sprint: 4, priority: 'high', estimated: '6ч' },
 
   // Sprint 5 (Weeks 13-14)
-  { id: 'T049', title: 'Bug triage и fixes', role: 'lead', sprint: 5, priority: 'high', estimated: '12ч' },
-  { id: 'T050', title: 'Code refactoring и cleanup', role: 'backend', sprint: 5, priority: 'high', estimated: '10ч' },
-  { id: 'T051', title: 'Performance optimization (100K rows)', role: 'backend', sprint: 5, priority: 'medium', estimated: '8ч' },
-  { id: 'T052', title: 'UI polish и responsive fixes', role: 'web', sprint: 5, priority: 'medium', estimated: '8ч' },
-  { id: 'T053', title: 'Deploy на Render/Fly.io', role: 'web', sprint: 5, priority: 'medium', estimated: '6ч' },
-  { id: 'T054', title: 'Full test coverage report', role: 'qa', sprint: 5, priority: 'high', estimated: '8ч' },
-  { id: 'T055', title: 'Load testing', role: 'qa', sprint: 5, priority: 'medium', estimated: '6ч' },
-  { id: 'T056', title: 'Финальный README', role: 'qa', sprint: 5, priority: 'high', estimated: '8ч' },
-  { id: 'T057', title: 'Презентация (10-15 слайдов)', role: 'lead', sprint: 5, priority: 'high', estimated: '10ч' },
-  { id: 'T058', title: 'Demo сценарий и репетиция', role: 'lead', sprint: 5, priority: 'high', estimated: '6ч' }
+  { id: 'T053', title: 'Bug triage и fixes', role: 'lead', sprint: 5, priority: 'high', estimated: '12ч' },
+  { id: 'T054', title: 'Code refactoring и cleanup', role: 'backend', sprint: 5, priority: 'high', estimated: '10ч' },
+  { id: 'T055', title: 'Performance optimization (100K rows)', role: 'backend', sprint: 5, priority: 'medium', estimated: '8ч' },
+  { id: 'T056', title: 'UI polish и responsive fixes', role: 'web', sprint: 5, priority: 'medium', estimated: '8ч' },
+  { id: 'T057', title: 'Deploy на публичный хостинг', role: 'web', sprint: 5, priority: 'medium', estimated: '6ч' },
+  { id: 'T058', title: 'Full test coverage report', role: 'qa', sprint: 5, priority: 'high', estimated: '8ч' },
+  { id: 'T059', title: 'Load testing', role: 'qa', sprint: 5, priority: 'medium', estimated: '6ч' },
+  { id: 'T060', title: 'Финальный README', role: 'qa', sprint: 5, priority: 'high', estimated: '8ч' },
+  { id: 'T061', title: 'Презентация (10-15 слайдов)', role: 'lead', sprint: 5, priority: 'high', estimated: '10ч' },
+  { id: 'T062', title: 'Demo сценарий и репетиция', role: 'lead', sprint: 5, priority: 'high', estimated: '6ч' }
 ];
 
 export function TaskBoard() {
   const roles = [
     { id: 'lead', name: 'Team Lead/PM', icon: <Briefcase className="w-5 h-5" />, color: 'blue' },
     { id: 'backend', name: 'Core Backend', icon: <Users className="w-5 h-5" />, color: 'emerald' },
-    { id: 'web', name: 'Web/UX', icon: <Palette className="w-5 h-5" />, color: 'purple' },
+    { id: 'web', name: 'API/Web', icon: <Palette className="w-5 h-5" />, color: 'purple' },
     { id: 'qa', name: 'QA/Doc/ML', icon: <CheckSquare className="w-5 h-5" />, color: 'amber' }
   ];
 
@@ -105,7 +108,7 @@ export function TaskBoard() {
     { id: 'all', label: 'Все' },
     { id: 'lead', label: 'Lead/PM' },
     { id: 'backend', label: 'Backend' },
-    { id: 'web', label: 'Web/UX' },
+    { id: 'web', label: 'API/Web' },
     { id: 'qa', label: 'QA/Doc/ML' }
   ];
 
