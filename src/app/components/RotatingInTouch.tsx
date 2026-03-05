@@ -15,7 +15,7 @@ export function RotatingInTouch() {
         style={{ animationDuration: '13s', animationTimingFunction: 'linear' }}
       >
         <defs>
-          <path id="ringTextPath" d="M 80,80 m -58,0 a 58,58 0 1,1 116,0 a 58,58 0 1,1 -116,0" />
+          <path id="ringTextPath" d="M 80,80 m -60,0 a 60,60 0 1,1 120,0 a 60,60 0 1,1 -120,0" />
         </defs>
         <text fill="#0f172a" fontSize="11" fontWeight="700" letterSpacing="1.1">
           <textPath href="#ringTextPath">{ROTATING_TEXT}</textPath>
